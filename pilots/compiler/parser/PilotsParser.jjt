@@ -53,6 +53,7 @@ TOKEN : /* RESERVED TOKENS */
 | <ERRORS: "errors">
 | <SIGNATURES: "signatures">
 | <CORRECTS: "correct">
+| <DEFINITIONS: "definitions">
 | <USING: "using">
 | <AT: "at">
 | <EVERY: "every">
@@ -109,6 +110,7 @@ ASTPilots Pilots():
         (<ERRORS> (";" | (Error())*))?
         (<SIGNATURES> (";" | (Signature())*))?
         (<CORRECTS> (";" | (Correct())*))?
+        (<DEFINITIONS> (";" | (Definition())*))?
     <PROGRAM_END> (";")?
     { return jjtThis; }
 }
@@ -175,6 +177,15 @@ void Correct():
     t1 = <VAR> (constant = Const())? ":" t2 = <VAR> "=" exp = Exp() ";"
     { jjtThis.jjtSetValue( t1.image + ":" + constant + ":" + t2.image + ":" + exp ); }
 }
+
+void Definition():
+{
+    String str;
+}
+{
+    { jjtThis.jjtSetValue( str );} 
+}
+
 
 
 String Vars(): 
