@@ -225,6 +225,80 @@ public class PilotsCodeGenerator implements PilotsParserVisitor {
         return newExp;
     }
 
+    /*
+    ---------------------------------------------------------
+    ---------------------------------------------------------
+    THE FOLLOWING IS IN PROGRESS (and not used yet):
+    ---------------------------------------------------------
+    */
+
+
+        //generate code for training learning model
+        protected void generate_LM_training(String filename) {
+
+            code_ += "File given_file = new File(" + filename + ");\n";
+
+            code_ += "if(given_file.exists()){\n";
+
+                //LM_ENGINE is environmental variable which determines where learning model engine is in the project
+                //(LM_ENGINE is derived from PILOTS_HOME)
+                code_ += insIndent() + "String engineIO_path = System.getenv(\"LM_ENGINE\");\n";
+
+                code_ += "String definitions_path = engineIO_path + \"definitions/\";\n";
+
+                code_ += "String copy_file_command = \"cp \" + filename + \" \" + definitions_path;\n";
+
+                //copy file to definitions directory
+
+                //the following is based on discussion from https://coderanch.com/t/419192/java/Runtime-getRuntime-exec-String-command:
+                code_ += "try {\n";
+
+                    code_ += insIndent() + "Process copy_cmd = Runtime.getRuntime().exec(training_command, null, new File(engineIO_path));\n";
+                    code_ += "BufferedReader in = new BufferedReader(\n";
+                                        code_ += insIndent() + "new InputStreamReader(copy_cmd.getInputStream()));\n";
+                    code_ += decInsIndent() + "String line = null\n";
+                    code_ += "while ((line = in.readLine()) != null) {\n";
+                        code_ += insIndent() + "System.out.println(line);\n";
+                    code_ += decInsIndent() + "}\n";
+
+                code_ += decInsIndent() + "} catch (IOException e) {\n";
+                    code_ += insIndent() + "e.printStackTrace();\n";
+                
+                code_ += decInsIndent() + "}\n";
+
+
+                //python engineIO.py <json file>
+                code_ += "String training_command = \"python engineIO.py\" + \" definitions/\" + filename;\n";
+
+                //execute engineIO
+
+                //the following is based on discussion from https://coderanch.com/t/419192/java/Runtime-getRuntime-exec-String-command:
+                code_ += "try {\n";
+
+                    code_ += insIndent() + "Process exec_cmd = Runtime.getRuntime().exec(training_command, null, new File(engineIO_path));\n";
+                    code_ += "BufferedReader in = new BufferedReader(\n";
+                                        code_ += insIndent() + "new InputStreamReader(exec_cmd.getInputStream()));\n";
+                    code_ += decInsIndent() + "String line = null\n";
+                    code_ += "while ((line = in.readLine()) != null) {\n";
+                        code_ += insIndent() + "System.out.println(line);\n";
+                    code_ += decInsIndent() + "}\n";
+
+                code_ += decInsIndent() + "} catch (IOException e) {\n";
+                    code_ += insIndent() + "e.printStackTrace();\n";
+                
+                code_ += decInsIndent() + "}\n";
+            code_ += decInsIndent() + "}\n";
+
+            code_ += "else{\n";
+               code_ += insIndent() + "System.out.println(\"Invalid File\");\n"; 
+            code_ += decInsIndent() + "}\n";
+        }
+
+    /*
+    ---------------------------------------------------------
+    ---------------------------------------------------------
+    */
+
     protected void generateGetCorrectedData() {
         // get all input variables in vars
         Vector<String> vars = new Vector<String>();
