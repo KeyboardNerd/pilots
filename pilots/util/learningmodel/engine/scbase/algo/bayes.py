@@ -24,8 +24,8 @@ class State(object):
         self.sum += input_data
         self.sqsum += input_data ** 2
         self.mean = self.sum/self.n
-        self.std = math.sqrt(self.sqsum/self.n - (self.sum/self.n) ** 2)
-
+        self.std = math.sqrt(float(self.sqsum)/self.n - (float(self.sum)/self.n) ** 2)
+    
 class Bayes(object):
 
     def __init__(self, sigma_scale=2, threshold=100):
