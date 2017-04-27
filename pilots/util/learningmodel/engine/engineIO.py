@@ -32,7 +32,7 @@ class DataDef(object):
         self.list_file = None
         self.str_type = None
         self.str_typehead = None
-        self.str_path_sch = None
+        self.str_path_sch = None # schema path
         self.dict_const = None
         if dict_def is not None:
             self.load_dict(dict_def)
@@ -144,12 +144,12 @@ class LearningEngine(object):
 
     def train(self):
         """ use training definition to train the model"""
-        self.read_data(self.traindef.datadef) # load data
-        self.read_preprocess(self.traindef.preprocessdef) # preprocess the data
-        self.read_model(self.traindef.modeldef) # train the model
+        self.loaddata(self.traindef.datadef) # load data
+        self.loadpreprocess(self.traindef.preprocessdef) # preprocess the data
+        self.loadmodel(self.traindef.modeldef) # train the model
         print ("engineIO: Finished Training")
 
-    def read_data(self, datadef):
+    def loaddata(self, datadef):
         """ read data defined by json_dict to env, and return the env"""
         list_pathfile = datadef.list_file
         try:
@@ -171,7 +171,7 @@ class LearningEngine(object):
             SCLOG.error("LearningEngine: Unable to load schema file" + datadef.str_path_sch)
             raise e
 
-    def read_preprocess(self, preprocessdef):
+    def loadpreprocess(self, preprocessdef):
         """ run preprocess step based on training definition"""
         if preprocessdef.step_preproc is not None:
             schema = self.env.get_schema_info()
@@ -179,7 +179,7 @@ class LearningEngine(object):
             matrix_ = self.env.transform(baseenv.BaseEnv.unit_transformer, schema=schema, units=units)
             self.env.set_data(matrix_)
 
-    def read_model(self, modeldef):
+    def loadmodel(self, modeldef):
         """ run model training step based on training definition"""
         if modeldef.list_features is not None:
             schema_info = self.env.get_schema_info()

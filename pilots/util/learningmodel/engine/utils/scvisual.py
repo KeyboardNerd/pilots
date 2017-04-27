@@ -13,22 +13,20 @@ class ScVisualizer(object):
     """
     supports only one instance running at a time
     """
-    # magic number to controll the ylim of the graph ( hard to actually know )
-    MAGIC_NUMBER_HACK = 0.01
     # dimension of the figure can't be changed once the program runs.
-    def __init__(self, scmodel, tp_dim=(10, 3)):
+    def __init__(self, scmodel, tp_dim=(10, 3), ylim=0.01):
         # every visualizer contains a window drawn in matplotlib
         self.scmodel = scmodel
         self.figure = plt.figure(figsize=tp_dim)
         self.axis = self.figure.add_subplot(1, 1, 1)
-
+        self.ylim = ylim
     def draw(self):
         """
         Update the plt's inner states and flush changes
         """
         self.axis.cla() # clear board
         self.update()
-        self.axis.set_ylim([0, ScVisualizer.MAGIC_NUMBER_HACK])
+        self.axis.set_ylim([0, self.ylim])
         # flush board
         self.figure.canvas.draw()
         self.figure.canvas.flush_events()
@@ -79,7 +77,7 @@ class ScVisualizerBayes(ScVisualizer):
         num_sigma = state.std
         if num_sigma == 0:
             # this is just for hacking
-            plt.plot([num_mean, num_mean], [0, ScVisualizer.MAGIC_NUMBER_HACK])
+            plt.plot([num_mean, num_mean], [0, self.ylim])
             return
         arr_x = np.linspace(num_mean-5*num_sigma, num_mean+5*num_sigma, 100)
         # normpdf uses mu, sigma for normal distribution function

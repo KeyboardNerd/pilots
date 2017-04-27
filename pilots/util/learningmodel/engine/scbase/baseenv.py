@@ -5,6 +5,8 @@ import pickle
 import model
 import math
 
+# Kludge: This represents bad design pattern, use PandaDataFrame to load data, use Sklearn.Pipeline to provide basic functionalities
+
 class BaseEnv():
     ''' class BaseEnv provides basic access of loading,training functions for machine learning'''
     def __init__(self):
@@ -156,7 +158,6 @@ class BaseEnv():
             npmatrix = a
         return npmatrix
     
-    # TODO: Use SymPy instead of lambda function
     @staticmethod
     def generate_transformer(feature_list, schema, constant):
         '''

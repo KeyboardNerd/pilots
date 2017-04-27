@@ -1,4 +1,7 @@
-{  
+{  "scvisual_ylim": 0.1,
+   "scvisual_model": "bayes_airfrance",
+   "scvisual_w": 10,
+   "scvisual_h": 5,
    "models":[
       {  
          "id":"linear_regression",

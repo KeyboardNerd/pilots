@@ -8,6 +8,12 @@ from utils.scvisual import ScVisualizerBayes
 config = 'server.json'
 app = Flask(__name__)
 
+interface = InterfaceIO.InterfaceIO(config)
+f = open(config, 'rU')
+json_dict = json.load(f)
+# quick hack, will remove this in days
+visualizer = ScVisualizerBayes(interface.models[json_dict["scvisual_model"]].model.estimator, (json_dict['scvisual_w'], json_dict['scvisual_h']), json_dict['scvisual_ylim'])
+
 def make_json(npmatrix):
     '''
         @param: npmatrix ( a ndarray, column matrix )
@@ -17,9 +23,6 @@ def make_json(npmatrix):
     s = json.dumps({'value': npmatrix.tolist()})
     print s
     return s
-interface = InterfaceIO.InterfaceIO(config)
-# quick hack, will remove this in days
-visualizer = ScVisualizerBayes(interface.models["bayes"].model.estimator)
 
 @app.route("/")
 def hello():
