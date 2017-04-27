@@ -1,0 +1,19 @@
+{
+	"data":{
+		"file": ["data/manual_error/speed_data.csv"],
+		"type": "csv",
+		"header_type": "csv",
+		"schema":"data/manual_error/speed_data_schema.json"
+	},
+	"model":{
+		"features": ["{vg} - math.sqrt({va}*{va} + {vw}*{vw} + 2*{va}*{vw}*math.cos((math.pi/180)*({aw}-{aa})))"],
+		"labels": ["{mode}"],
+		"algorithm": {
+			"id": "bayesonline",
+			"param": {"sigma_scale": 2, "threshold": 200},
+			"save_file": "bayes_airfrance.estimator",
+			"serialize_function": "to_json",
+			"deserialize_function": "load_json"
+		}
+	}
+}

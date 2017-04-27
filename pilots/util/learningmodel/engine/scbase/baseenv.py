@@ -3,6 +3,7 @@ from pint import UnitRegistry
 import re
 import pickle
 import model
+import math
 
 class BaseEnv():
     ''' class BaseEnv provides basic access of loading,training functions for machine learning'''
@@ -154,6 +155,8 @@ class BaseEnv():
                 a[i,:] = npmatrix[i+1] - npmatrix[i]
             npmatrix = a
         return npmatrix
+    
+    # TODO: Use SymPy instead of lambda function
     @staticmethod
     def generate_transformer(feature_list, schema, constant):
         '''
@@ -179,7 +182,7 @@ class BaseEnv():
                 string.append(feature_list[i].format(**string_vars[i]))
             except Exception, e:
                 print "feature function generation error: " + feature_list[i] + ", values = ", string_vars[i]
-                raise e;
+                raise e
         transformer = eval('lambda(x): np.asarray(['+reduce(lambda a,b: a+','+b, string)+'])')
         return transformer
 

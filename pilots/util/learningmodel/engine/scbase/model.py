@@ -1,5 +1,7 @@
 import pickle
 import numpy as np
+import math # math is important for lambda expression evaluation!
+
 class Model(object):
 	""" Model class provides a wrapper for learning models, including the equation definition of features and labels, saving and loading functions"""
 	""" It's a general class for various machine learning algorithms and hypothesis"""

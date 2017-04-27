@@ -1,0 +1,22 @@
+Projects:
+--------------------
+analyse: ( Need to be refactored ) 
+1. algorithm to compute response time and accuracy
+2. pilots program that generates correct error signatures based on real weight instead of predicted weight.
+
+bayesian: ( Future development: using bayesian directly to compute the error signatures )
+Uses Dynamic Bayes algorithm to compute Coefficient of Lift
+
+with_cruise_detection:
+Uses cruise detection algorithm and linear model to compute error signatures and estimated weights.
+
+without_cruise_detection:
+Uses linear model to compute error signatures and estimated weights.
+--------------------
+--------------------
+Files:
+--------------------
+Handler: outputHandler for estimated and measured weights. 
+Handler_mode: outputHandler for current signature.
+producer_error: dataProducer generating measured weight data with errors.
+producer_real:  dataProducer generating measured weight data without errors.

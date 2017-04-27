@@ -29,7 +29,13 @@
         "model":"bayes_online.estimator",
         "translation":{"v_a": "v"},
         "update":true
+      },
+      {
+        "id":"bayes_airfrance",
+        "model":"bayes_airfrance.estimator",
+        "translation": {"true_air_speed": "va", "ground_speed": "vg", "wind_speed": "vw", "wind_angle": "aw", "air_angle":"aa"},
+        "update": false
       }
-
+      
    ]
 }
